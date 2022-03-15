@@ -1,0 +1,20 @@
+s3:
+  token: 'token1'
+
+server:
+  port: '9096'
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - "*"
+
+spring:
+  config:
+    import: configserver:http://localhost:8046
+  application:
+    name: 'flydubai-service'
+  profiles:
+    active: 'prod'

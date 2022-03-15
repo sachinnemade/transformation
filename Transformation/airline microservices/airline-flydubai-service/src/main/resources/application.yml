@@ -1,0 +1,73 @@
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    fetchRegistry: 'true'
+    instance:
+      preferIpAddress: 'true'
+    registerWithEureka: 'true'
+    serviceUrl:
+      defaultZone: http://172.17.0.1:8761/eureka
+
+spring:
+  datasource:
+    driverClassName: org.h2.Driver
+    password: ''
+    username: sa
+    url: jdbc:h2:mem:testdb
+  application:
+    name: flydubai-service
+  main:
+    allow-bean-definition-overriding: 'true'
+  h2:
+    console:
+      settings:
+        trace: 'false'
+        web-allow-others: 'false'
+      path: /h2-console
+      enabled: 'true'
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: 'true'
+    database-platform: org.hibernate.dialect.H2Dialect
+  config:
+    import: configserver:http://172.17.0.1:8046
+  profiles:
+    active: default
+  oauth2:
+    resource:
+      user-info-uri: http://localhost:8081/v1/users
+      token-info-uri: http://172.17.0.1:8080/oauth/check_token
+      id: user-resource
+    client:
+      client-secret: bar
+      client-id: User
+
+server:
+  port: '9095'
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - "*"
+
+s3:
+  token: 'token1'
+
+cloud:
+  aws:
+    credentials:
+      secret-key: /FunEYtFTci/uRLvGOdO1BvLNMtOVxuC2bnx/g1f
+      access-key: AKIAVF5MBF6ACCHMQW4S
+    region:
+      static: us-east-1
+    stack:
+      auto: 'false'
+application:
+  bucket:
+    name: transformation-files
